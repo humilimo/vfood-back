@@ -10,8 +10,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Colaborator {
   id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  name  String
+  area  String
+  grade Float
+  Fazer Fazer[]
+}
+
+model Indicator {
+  id        Int      @id @default(autoincrement())
+  name      String
+  weight    Float
+  type      Int      @default(0) //0 = NUMERICO, 1 = FINANCEIRO, 2 = PERCENTUAL
+  meta      Float
+  supermeta Float
+  desafio   Float
+  createdAt DateTime @default(now())
+  Fazer     Fazer[]
+}
+
+model Fazer {
+  colaborator   Colaborator @relation(fields: [colaboratorID], references: [id])
+  colaboratorID Int
+  indicator     Indicator   @relation(fields: [indicatorID], references: [id])
+  indicatorID   Int
+  progress      Float
+  done          Int         @default(1)
+
+  @@id([colaboratorID, indicatorID])
 }
