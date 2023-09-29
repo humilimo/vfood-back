@@ -20,48 +20,54 @@ export class ColaboratorController {
     const indicators =
       await this.colaboratorService.getIndicatorsForThisMonth();
 
-    const collaboratorMaxCategory = {};
+    const metas = new Set();
+    const supermetas = new Set();
+    const desafios = new Set();
+    const noneCompleted = new Set();
 
-    indicators.forEach((item) => {
-      const currentCategory = collaboratorMaxCategory[item.colaborator.id] || 0;
-      let newCategory = 0;
+    indicators.forEach((indicator) => {
+      const colaboratorId = indicator.colaborator.id;
 
-      if (item.progress >= item.indicator.desafio) newCategory = 3;
-      else if (item.progress >= item.indicator.supermeta) newCategory = 2;
-      else if (item.progress >= item.indicator.meta) newCategory = 1;
-
-      collaboratorMaxCategory[item.colaborator.id] = Math.max(
-        currentCategory,
-        newCategory,
-      );
+      if (indicator.progress >= indicator.indicator.desafio) {
+        if (!desafios.has(colaboratorId)) {
+          desafios.add(colaboratorId);
+        }
+      } else if (indicator.progress >= indicator.indicator.supermeta) {
+        if (!supermetas.has(colaboratorId)) {
+          supermetas.add(colaboratorId);
+        }
+      } else if (indicator.progress >= indicator.indicator.meta) {
+        if (!metas.has(colaboratorId)) {
+          metas.add(colaboratorId);
+        }
+      } else if (indicator.progress < indicator.indicator.meta) {
+        if (!noneCompleted.has(colaboratorId)) {
+          noneCompleted.add(colaboratorId);
+        }
+      }
     });
 
-    const metas = [];
-    const supermetas = [];
-    const desafios = [];
-    const noneCompleted = [];
-
-    for (const colabId in collaboratorMaxCategory) {
-      const colab = indicators.find(
-        (ind) => ind.colaborator.id === +colabId,
-      ).colaborator;
-
-      if (collaboratorMaxCategory[colabId] === 0) {
-        noneCompleted.push(colab);
-      } else if (collaboratorMaxCategory[colabId] === 1) {
-        metas.push(colab);
-      } else if (collaboratorMaxCategory[colabId] === 2) {
-        supermetas.push(colab);
-      } else if (collaboratorMaxCategory[colabId] === 3) {
-        desafios.push(colab);
-      }
-    }
-
     return {
-      metas,
-      supermetas,
-      desafios,
-      noneCompleted,
+      metas: Array.from(metas).map(
+        (id) =>
+          indicators.find((indicator) => indicator.colaborator.id === id)
+            .colaborator,
+      ),
+      supermetas: Array.from(supermetas).map(
+        (id) =>
+          indicators.find((indicator) => indicator.colaborator.id === id)
+            .colaborator,
+      ),
+      desafios: Array.from(desafios).map(
+        (id) =>
+          indicators.find((indicator) => indicator.colaborator.id === id)
+            .colaborator,
+      ),
+      noneCompleted: Array.from(noneCompleted).map(
+        (id) =>
+          indicators.find((indicator) => indicator.colaborator.id === id)
+            .colaborator,
+      ),
     };
   }
 

@@ -32,7 +32,7 @@ export class ColaboratorService {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    return this.prisma.fazer.findMany({
+    const indicators = await this.prisma.fazer.findMany({
       where: {
         indicator: {
           createdAt: {
@@ -46,5 +46,7 @@ export class ColaboratorService {
         indicator: true,
       },
     });
+
+    return indicators;
   }
 }
