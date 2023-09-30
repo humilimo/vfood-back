@@ -55,6 +55,8 @@ export class ColaboratorService {
     return {
       id: colaborator.id,
       name: colaborator.name,
+      area: colaborator.area,
+      grade: colaborator.grade,
       indicators: currentDateIndicators.map((fazer) => fazer.indicator),
       metas,
       supermetas,
