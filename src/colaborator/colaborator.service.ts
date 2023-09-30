@@ -8,14 +8,6 @@ export class ColaboratorService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateColaboratorDto){
-    // const existingColaborator = await this.prisma.colaborator.findFirst({
-    //     where: {
-    //         id: data.id 
-    //     }
-    // });
-    // if (existingColaborator) {
-    //     throw new Error('Já existe um colaborador com o mesmo ID.');
-    // }
     return this.prisma.colaborator.create({
         data,
     });

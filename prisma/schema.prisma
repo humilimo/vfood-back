@@ -14,7 +14,7 @@ model Colaborator {
   id    Int     @id @default(autoincrement())
   name  String
   area  String
-  grade Float
+  grade Float?
   Fazer Fazer[]
 }
 

@@ -1,7 +1,10 @@
 import {Prisma} from '@prisma/client';
+import { IsNotEmpty, IsString, IsNumber, IsOptional, IsInt, Min, Max } from 'class-validator';
 export class CreateColaboratorDto implements Prisma.ColaboratorCreateInput{
-    id: number;
+    @IsNotEmpty()
+    @IsString()
     name: string;
+    @IsNotEmpty()
+    @IsString()
     area : string;
-    grade: number;
 }
