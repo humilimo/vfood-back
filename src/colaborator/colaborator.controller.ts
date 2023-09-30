@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ColaboratorService } from './colaborator.service';
 import { CreateColaboratorDto } from './dto/create-colaborator.dto';
@@ -82,8 +83,19 @@ export class ColaboratorController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.colaboratorService.findOne(+id);
+  async findOne(
+    @Param('id') id: string,
+    @Query('month') month?: string,
+    @Query('year') year?: string,
+  ) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
+
+    const targetMonth = month ? parseInt(month) : currentMonth;
+    const targetYear = year ? parseInt(year) : currentYear;
+
+    return this.colaboratorService.findOne(+id, targetMonth, targetYear);
   }
 
   @Patch(':id')
