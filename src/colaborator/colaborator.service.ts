@@ -7,12 +7,22 @@ import { PrismaService } from 'src/prisma.service';
 export class ColaboratorService {
   constructor(private prisma: PrismaService) {}
 
-  create(createColaboratorDto: CreateColaboratorDto) {
-    return 'This action adds a new colaborator';
-  }
+  async create(data: CreateColaboratorDto){
+    // const existingColaborator = await this.prisma.colaborator.findFirst({
+    //     where: {
+    //         id: data.id 
+    //     }
+    // });
+    // if (existingColaborator) {
+    //     throw new Error('Já existe um colaborador com o mesmo ID.');
+    // }
+    return this.prisma.colaborator.create({
+        data,
+    });
+}
 
   findAll() {
-    return `This action returns all colaborator`;
+    return this.prisma.colaborator.findMany();
   }
 
   async findOne(id: number, month: number, year: number) {
