@@ -70,4 +70,27 @@ export class ColaboratorService {
   remove(id: number) {
     return `This action removes a #${id} colaborator`;
   }
+
+  async getIndicatorsForThisMonth() {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    const indicators = await this.prisma.fazer.findMany({
+      where: {
+        indicator: {
+          createdAt: {
+            gte: startOfMonth,
+            lte: endOfMonth,
+          },
+        },
+      },
+      include: {
+        colaborator: true,
+        indicator: true,
+      },
+    });
+
+    return indicators;
+  }
 }
