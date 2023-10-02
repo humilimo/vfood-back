@@ -124,6 +124,10 @@ export class ColaboratorService {
   }
 
   private calcColaboratorGrade(colaborator, month, year) {
+    const date = new Date();
+    if (month === date.getMonth() + 1) {
+      month = month - 1;
+    }
     const currentDateIndicators = colaborator.Fazer.filter((fazer) => {
       const indicatorDate = new Date(fazer.indicator.createdAt);
       return (
