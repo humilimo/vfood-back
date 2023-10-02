@@ -35,8 +35,7 @@ model Fazer {
   colaboratorID Int
   indicator     Indicator   @relation(fields: [indicatorID], references: [id])
   indicatorID   Int
-  progress      Float
+  progress      Float       @default(0)
   done          Int         @default(1)
-
   @@id([colaboratorID, indicatorID])
 }
