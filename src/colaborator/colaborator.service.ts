@@ -7,12 +7,14 @@ import { Prisma } from '@prisma/client';
 export class ColaboratorService {
   constructor(private prisma: PrismaService) {}
 
-  create(createColaboratorDto: CreateColaboratorDto) {
-    return 'This action adds a new colaborator';
-  }
+  async create(data: CreateColaboratorDto){
+    return this.prisma.colaborator.create({
+        data,
+    });
+}
 
   findAll() {
-    return `This action returns all colaborator`;
+    return this.prisma.colaborator.findMany();
   }
 
   async findOne(id: number, month: number, year: number) {
