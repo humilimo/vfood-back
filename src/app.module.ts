@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { PrismaService } from './prisma.service';
 import { ColaboratorModule } from './colaborator/colaborator.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { IndicatorModule } from './indicator/indicator.module';
 
 @Module({
-  imports: [ColaboratorModule, ScheduleModule.forRoot()],
+  imports: [ColaboratorModule, IndicatorModule, ScheduleModule.forRoot()],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
