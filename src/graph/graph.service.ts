@@ -32,9 +32,12 @@ export class GraphService {
         }
       },
       select: {
-        done: true,
+        progress: true,
         indicator: {
           select: {
+            meta: true,
+            supermeta: true,
+            desafio: true,
             createdAt: true
           }
         }
@@ -45,7 +48,15 @@ export class GraphService {
   
     for (const item of fazer) {
       const data = item.indicator.createdAt.getMonth() + 1;
-      const status = item.done;
+      let status = 0;
+
+      if (item.progress >= item.indicator.desafio) {
+        status = 3;
+      } else if (item.progress >= item.indicator.supermeta) {
+        status = 2;
+      } else if (item.progress >= item.indicator.meta) {
+        status = 1;
+      }
   
       if (!mesesQuantidade[data]) {
         mesesQuantidade[data] = {};
@@ -73,15 +84,24 @@ export class GraphService {
     const fazer = await this.prisma.fazer.findMany({
       select: {
         done: true,
-        indicator: true
+        indicator: true,
+        progress: true,
       },
     });
   
     const mesesQuantidade: MesesQuantidade = {};
   
     for (const item of fazer) {
-      const data = item.indicator.createdAt.getMonth();
-      const status = item.done;
+      const data = item.indicator.createdAt.getMonth() + 1;
+      let status = 0;
+
+      if (item.progress >= item.indicator.desafio) {
+        status = 3;
+      } else if (item.progress >= item.indicator.supermeta) {
+        status = 2;
+      } else if (item.progress >= item.indicator.meta) {
+        status = 1;
+      }
   
       if (!mesesQuantidade[data]) {
         mesesQuantidade[data] = {};
