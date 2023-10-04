@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Get } from '@nestjs/common';
 import { IndicatorService } from './indicator.service';
 import { CreateIndicatorDto } from './dto/create-indicator.dto';
 import { UpdateIndicatorDto } from './dto/update-indicator.dto';
@@ -6,6 +6,11 @@ import { UpdateIndicatorDto } from './dto/update-indicator.dto';
 @Controller('indicator')
 export class IndicatorController {
   constructor(private readonly indicatorService: IndicatorService) {}
+
+  @Get()
+  findAll() {
+    return this.indicatorService.findAll();
+  }
 
   @Post()
   create(@Body() createIndicatorDto: CreateIndicatorDto) {

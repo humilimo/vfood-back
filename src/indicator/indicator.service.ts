@@ -7,6 +7,10 @@ import { PrismaService } from 'src/prisma.service';
 export class IndicatorService {
   constructor(private prisma: PrismaService) {}
 
+  findAll() {
+    return this.prisma.indicator.findMany();
+  }
+
   async create(createIndicatorDto: CreateIndicatorDto) {
     return this.prisma.indicator.create({ data: createIndicatorDto });
   }
