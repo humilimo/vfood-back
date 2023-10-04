@@ -14,7 +14,7 @@ import { FazerModule } from './fazer/fazer.module';
     IndicatorModule,
     FazerModule,
     ScheduleModule.forRoot(),
-    GraphModule
+    GraphModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
