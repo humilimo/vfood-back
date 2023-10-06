@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateColaboratorDto } from './dto/create-colaborator.dto';
 import { UpdateColaboratorDto } from './dto/update-colaborator.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma } from '@prisma/client';
-import axios from 'axios';
 @Injectable()
 export class ColaboratorService {
   constructor(private prisma: PrismaService) {}
@@ -128,9 +126,9 @@ export class ColaboratorService {
 
   private calcColaboratorGrade(colaborator, month, year) {
     const date = new Date();
-    if (colaborator.grade === null && month == date.getMonth() + 1) { 
-      return null;
-    }
+    // if (colaborator.grade === null && month == date.getMonth() + 1) { 
+    //   return null;
+    // }
     if (month === date.getMonth() + 1) {
       month = month - 1;
     }
